@@ -1,20 +1,31 @@
-package org.adrewdev.apachecamel.exercise1;
+package org.adrewdev.apachecamel.exercise1.camelController;
 
+import lombok.RequiredArgsConstructor;
+import org.adrewdev.apachecamel.exercise1.errors.ErrorHandlerProcessor;
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class Exercise1 extends RouteBuilder {
+
+    private final ErrorHandlerProcessor errorHandlerProcessor;
+
     @Override
     public void configure() {
 
         restConfiguration().bindingMode(RestBindingMode.json);
+
+        onException(Exception.class)
+                .handled(true)
+                .process(errorHandlerProcessor)
+                .log(LoggingLevel.ERROR, "Handled exception: ${exception.message}");
 
         // endpoint para recibir un dato por path param
         rest("/api")
@@ -26,12 +37,7 @@ public class Exercise1 extends RouteBuilder {
             .log("Received request for path parameter route with data: ${header.data}")
             .choice()
                 .when(header("data").isNull())
-                    .process(exchange -> {
-                    var errorResponse = new HashMap<>();
-                    errorResponse.put("error", "Missing path parameter 'data'");
-                    exchange.getIn().setBody(errorResponse);
-                    exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-                })
+                    .throwException(new IllegalArgumentException("Missing path parameter 'data'"))
                 .otherwise()
                     .process(exchange -> {
                     var response = Map.of(
@@ -53,13 +59,7 @@ public class Exercise1 extends RouteBuilder {
             .log("Received request for query parameter route with param: ${header.param}")
             .choice()
                 .when(header("param").isNull())
-                    .process(exchange -> {
-                    var errorResponse = Map.of(
-                            "error", "Missing query parameter 'param'"
-                    );
-                    exchange.getIn().setBody(errorResponse);
-                    exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-                })
+                    .throwException(new IllegalArgumentException("Missing query parameter 'param'"))
                 .otherwise()
                     .process(exchange -> {
                     var response = Map.of(
@@ -81,13 +81,7 @@ public class Exercise1 extends RouteBuilder {
             .log("Received request for JSON body route")
             .choice()
                 .when(body().isNull())
-                    .process(exchange -> {
-                    var errorResponse = Map.of(
-                            "error", "Missing JSON body"
-                    );
-                    exchange.getIn().setBody(errorResponse);
-                    exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-                })
+                    .throwException(new IllegalArgumentException("Missing JSON body"))
                 .otherwise()
                     .process(exchange -> {
                     var json = exchange.getIn().getBody(Map.class);
