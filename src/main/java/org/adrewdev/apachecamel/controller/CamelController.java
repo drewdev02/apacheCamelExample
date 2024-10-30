@@ -20,7 +20,8 @@ public class CamelController {
 
     @GetMapping("/test1")
     public String test1() {
-        val res = producerTemplate.send("direct:camel-route", p -> log.info("body= {}", p.getIn().getBody()));
+        val res = producerTemplate.send("direct:camel-route",
+                p -> log.info("body= {}", p.getIn().getBody()));
         return res.getIn().getBody().toString();
     }
 
