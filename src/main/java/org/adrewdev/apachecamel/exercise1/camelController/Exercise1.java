@@ -20,7 +20,10 @@ public class Exercise1 extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration().bindingMode(RestBindingMode.json);
+        restConfiguration()
+                .bindingMode(RestBindingMode.json)
+                .enableCORS(true)
+                .dataFormatProperty("prettyPrint", "true");
 
         onException(Exception.class)
                 .handled(true)
