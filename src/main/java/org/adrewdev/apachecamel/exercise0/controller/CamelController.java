@@ -1,9 +1,9 @@
-package org.adrewdev.apachecamel.controller;
+package org.adrewdev.apachecamel.exercise0.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.adrewdev.apachecamel.model.Param;
+import org.adrewdev.apachecamel.exercise0.model.Param;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

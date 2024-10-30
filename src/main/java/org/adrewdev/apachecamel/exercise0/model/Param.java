@@ -1,4 +1,4 @@
-package org.adrewdev.apachecamel.model;
+package org.adrewdev.apachecamel.exercise0.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

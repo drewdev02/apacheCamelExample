@@ -1,14 +1,14 @@
-package org.adrewdev.apachecamel.config;
+package org.adrewdev.apachecamel.exercise0.camelController;
 
-import org.adrewdev.apachecamel.model.Param;
-import org.adrewdev.apachecamel.model.UserDto;
+import org.adrewdev.apachecamel.exercise0.model.Param;
+import org.adrewdev.apachecamel.exercise0.model.UserDto;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CamelConfig extends RouteBuilder {
+public class Exercise0 extends RouteBuilder {
     @Override
     public void configure() {
 
