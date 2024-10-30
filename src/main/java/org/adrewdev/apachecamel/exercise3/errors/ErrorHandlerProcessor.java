@@ -1,4 +1,4 @@
-package org.adrewdev.apachecamel.exercise1.errors;
+package org.adrewdev.apachecamel.exercise3.errors;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
