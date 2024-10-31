@@ -3,8 +3,8 @@ package org.adrewdev.apachecamel.exercise3.camelController;
 import lombok.RequiredArgsConstructor;
 import org.adrewdev.apachecamel.exercise3.dto.InvoiceDTO;
 import org.adrewdev.apachecamel.exercise3.dto.InvoiceMapper;
-import org.adrewdev.apachecamel.exercise3.dto.InvoiceSummaryDTO;
 import org.adrewdev.apachecamel.exercise3.errors.ErrorHandlerProcessor;
+import org.adrewdev.apachecamel.exercise3.validations.Validate;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -45,7 +45,10 @@ public class Exercise3 extends RouteBuilder {
             .unmarshal()
             .json(JsonLibrary.Jackson, InvoiceDTO.class)
             .process(exchange -> {
-                    var invoiceDTO = exchange.getIn().getBody(InvoiceDTO.class);
+                    var invoiceDTO = (InvoiceDTO) exchange.getIn().getBody();
+
+                    Validate.validateInvoice(exchange, invoiceDTO);
+
                     var summaryDTO = invoiceMapper.toSummaryDTO(invoiceDTO);
                     exchange.getIn().setBody(summaryDTO);
                     exchange.getIn().setHeader(Exchange.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

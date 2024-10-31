@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InvoiceMapper {
 
-
     public InvoiceSummaryDTO toSummaryDTO(InvoiceDTO invoiceDTO) {
         var summaryDTO = new InvoiceSummaryDTO();
 
