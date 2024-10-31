@@ -1,15 +1,23 @@
 package org.adrewdev.apachecamel.exercise3.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceSummaryDTO {
+public class DataInvoiceSummaryDTO {
+    private List<InvoiceSummaryDTO> invoiceSummary;
+}
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class InvoiceSummaryDTO {
     private String invoiceId;            // Cambiado de invoiceNumber
     private String issueDate;            // Cambiado de date
     private CustomerSummaryDTO customer; // Información del cliente agrupada

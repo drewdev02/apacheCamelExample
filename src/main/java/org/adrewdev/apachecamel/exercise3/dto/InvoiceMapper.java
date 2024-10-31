@@ -11,7 +11,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InvoiceMapper {
 
-    public InvoiceSummaryDTO toSummaryDTO(InvoiceDTO invoiceDTO) {
+
+    public DataInvoiceSummaryDTO toSummaryDTO(ResponseData data) {
+        var dtos = data.getInvoices().stream().map(this::toSummaryDTO).toList();
+        return new DataInvoiceSummaryDTO(dtos);
+    }
+
+    private InvoiceSummaryDTO toSummaryDTO(InvoiceDTO invoiceDTO) {
         var summaryDTO = new InvoiceSummaryDTO();
 
         // Mapeo de campos directos
@@ -30,7 +36,11 @@ public class InvoiceMapper {
         var itemsMap = invoiceDTO.getItems().stream()
                 .collect(Collectors.toMap(
                         ItemDTO::getDescription,
-                        item -> new ItemSummaryDTO(item.getQuantity(), item.getUnitPrice())
+                        item -> new ItemSummaryDTO(item.getQuantity(), item.getUnitPrice()),
+                        (item1, item2) -> new ItemSummaryDTO(
+                                item1.getQuantity() + item2.getQuantity(),
+                                item1.getPrice() + item2.getPrice()
+                        )
                 ));
         summaryDTO.setItems(itemsMap);
 

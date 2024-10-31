@@ -1,0 +1,57 @@
+{
+  "invoices": [
+    {
+      "invoiceNumber": "INV-2024-001",
+      "date": "2024-10-30",
+      "customer": {
+        "name": "Andrés Pérez",
+        "email": "andres.perez@example.com",
+        "phone": "+52 1 555 123 4567",
+        "address": {
+          "street": "Calle Falsa 123",
+          "city": "Ciudad de México",
+          "state": "CDMX",
+          "zipCode": "01000",
+          "country": "México"
+        }
+      },
+      "items": [
+        {
+          "description": "Producto A",
+          "quantity": 2,
+          "unitPrice": 150.00,
+          "totalPrice": 300.00
+        },
+         {
+          "description": "Producto A",
+          "quantity": 2,
+          "unitPrice": 150.00,
+          "totalPrice": 300.00
+        },
+        {
+          "description": "Producto B",
+          "quantity": 1,
+          "unitPrice": 200.00,
+          "totalPrice": 200.00
+        },
+        {
+          "description": "Producto C",
+          "quantity": 1,
+          "unitPrice": 200.00,
+          "totalPrice": 200.00
+        },
+        {
+          "description": "Producto B",
+          "quantity": 200,
+          "unitPrice": 200.00,
+          "totalPrice": 200.00
+        }
+      ],
+      "subtotal": 500.00,
+      "tax": 80.00,
+      "total": 580.00,
+      "paymentMethod": "Tarjeta de crédito",
+      "notes": "Gracias por su compra."
+    }
+  ]
+}
